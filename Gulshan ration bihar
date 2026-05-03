@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gulshan Ration Bihar | गिरियक, नालंदा</title>
+    <style>
+        :root {
+            --primary-color: #1a2a6c;
+            --accent-color: #f21905;
+            --bg-color: #f0f2f5;
+        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); margin: 0; padding: 0; }
+        
+        .header { background: linear-gradient(to right, #1a2a6c, #b21f1f, #fdbb2d); color: white; padding: 25px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .logo-img { width: 120px; height: 120px; border-radius: 50%; border: 4px solid white; margin-bottom: 10px; background: white; }
+        .header h1 { margin: 0; font-size: 30px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); }
+        .header p { margin: 5px 0 0; font-weight: 500; font-size: 15px; }
+
+        .main-container { max-width: 700px; margin: 30px auto; padding: 20px; }
+        .card { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); text-align: center; border: 1px solid #ddd; }
+        
+        .input-group { margin: 25px 0; }
+        input[type="text"] { 
+            width: 85%; padding: 18px; border: 2px solid #ddd; border-radius: 50px; 
+            font-size: 20px; text-align: center; outline: none; transition: 0.3s;
+        }
+        input[type="text"]:focus { border-color: var(--accent-color); box-shadow: 0 0 15px rgba(242, 25, 5, 0.2); }
+
+        .btn-group { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .btn { padding: 15px 35px; font-size: 16px; border-radius: 50px; border: none; cursor: pointer; font-weight: bold; transition: 0.3s; text-decoration: none; }
+        .btn-search { background: var(--accent-color); color: white; box-shadow: 0 4px 10px rgba(242, 25, 5, 0.3); }
+        .btn-official { background: #34495e; color: white; }
+        .btn:hover { transform: scale(1.05); opacity: 0.9; }
+
+        #receiptSection { display: none; margin-top: 35px; padding: 30px; border: 2px solid #444; background: #fff; text-align: left; border-radius: 10px; position: relative; }
+        .receipt-header { text-align: center; border-bottom: 2px solid #444; margin-bottom: 20px; padding-bottom: 10px; }
+        .receipt-row { display: flex; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px dashed #ccc; padding-bottom: 5px; font-size: 16px; }
+        
+        .footer { text-align: center; margin-top: 40px; color: #555; font-size: 13px; padding-bottom: 40px; }
+
+        @media print {
+            .header, .input-group, .btn-group, .footer, .no-print { display: none !important; }
+            #receiptSection { display: block !important; border: none; width: 100%; margin: 0; padding: 0; }
+            .main-container { margin: 0; width: 100%; max-width: 100%; }
+            body { background: white; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <img src="logo.png" alt="Gulshan Printing Press" class="logo-img">
+        <h1>GULSHAN RATION BIHAR</h1>
+        <p>विष्णु पथ रोड, गिरियक, नालंदा, बिहार - 803109</p>
+        <p>CSC ID: 377673610017 | प्रो: गुलशन कुमार</p>
+    </div>
+
+    <div class="main-container">
+        <div class="card">
+            <h2>राशन कार्ड खोजें (Aadhaar Seeding)</h2>
+            <div class="input-group">
+                <input type="text" id="aadhaarField" placeholder="12 अंकों का आधार नंबर डालें" maxlength="12">
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-search" onclick="processData()">विवरण देखें और प्रिंट करें</button>
+                <a href="https://epds.bihar.gov.in/" target="_blank" class="btn btn-official">EPDS Bihar Portal</a>
+            </div>
+
+            <div id="receiptSection">
+                <div class="receipt-header">
+                    <h3 style="margin:0; color:#b21f1f;">डिजिटल राशन कार्ड रसीद</h3>
+                    <p style="margin:5px 0; font-weight:bold;">Gulshan Printing Press & Videography</p>
+                    <p style="font-size:12px; margin:0;">पता: विष्णु पथ रोड, गिरियक (नालंदा)</p>
+                </div>
+                
+                <div class="receipt-row"><strong>दुकान संचालक:</strong> <span>गुलशन कुमार (CSC VLE)</span></div>
+                <div class="receipt-row"><strong>आधार नंबर:</strong> <span id="resAadhaar"></span></div>
+                <div class="receipt-row"><strong>राशन कार्ड संख्या:</strong> <span>BR10029300XXXXX</span></div>
+                <div class="receipt-row"><strong>कार्ड का प्रकार:</strong> <span>PHH / Antyodaya</span></div>
+                <div class="receipt-row"><strong>दिनांक:</strong> <span id="resTime"></span></div>
+                
+                <div style="margin-top: 30px; text-align: center; border-top: 1px solid #000; padding-top: 10px;">
+                    <p style="font-size: 12px; font-weight: bold; margin: 0;">धन्यवाद! दोबारा पधारें।</p>
+                    <p style="font-size: 10px; color: #666;">Website Powered by RGS EDITOR</p>
+                </div>
+                
+                <button class="btn btn-search no-print" style="width: 100%; margin-top: 20px; justify-content: center;" onclick="window.print()">🖨️ अभी प्रिंट निकालें</button>
+            </div>
+        </div>
+        <div class="footer">
+            © 2026 Gulshan Ration Bihar | गिरियक, नालंदा का अपना डिजिटल सेंटर
+        </div>
+    </div>
+
+    <script>
+        function processData() {
+            const aadhar = document.getElementById('aadhaarField').value;
+            if(aadhar.length === 12 && !isNaN(aadhar)) {
+                document.getElementById('resAadhaar').innerText = "XXXX-XXXX-" + aadhar.substring(8);
+                document.getElementById('resTime').innerText = new Date().toLocaleString('hi-IN');
+                document.getElementById('receiptSection').style.display = 'block';
+                document.getElementById('receiptSection').scrollIntoView({ behavior: 'smooth' });
+            } else {
+                alert("कृपया वैध 12 अंकों का आधार नंबर दर्ज करें।");
+            }
+        }
+    </script>
+</body>
+</html>
